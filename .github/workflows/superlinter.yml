@@ -1,0 +1,32 @@
+# Nome do workflow (fluxo de trabalho)
+name: Super-Linter
+
+# Define que o workflow será executado quando houver um push no repositório
+on: push
+
+# Início da definição dos jobs (tarefas)
+jobs:
+  # ID do job (tarefa principal)
+  super-lint:
+    # Nome amigável exibido na interface do GitHub
+    name: Lint code base
+    # Especifica que o job rodará no sistema operacional Ubuntu mais recente
+    runs-on: ubuntu-latest
+    
+    # Início dos passos (etapas) do job
+    steps:
+      # Primeiro passo: fazer checkout do código
+      - name: Checkout code
+        # Usa a ação oficial do GitHub para baixar o código
+        uses: actions/checkout@v2
+
+      # Segundo passo: executar o Super-Linter
+      - name: Run Super-Linter
+        # Usa a ação Super-Linter mantida pelo GitHub
+        uses: github/super-linter@v4
+        # Define variáveis de ambiente para a ação
+        env:
+          # Especifica que a branch padrão é 'main'
+          DEFAULT_BRANCH: main
+          # Token de autenticação do GitHub (gerado automaticamente)
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
